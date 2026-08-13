@@ -14,8 +14,10 @@ import SkillGraphIcon from "./skillGraphIcon";
 import TickIcon from "./tickIcon";
 import CrossIcon from "./crossIcon";
 import HexagonIcon from "./hexagonIcon";
+import InfoIcon from "./infoIcon";
 
 export {
+  InfoIcon,
   HexagonIcon,
   CrossIcon,
   TickIcon,

@@ -71,6 +71,24 @@
   min-height: calc(100vh - 108px);
 }
 
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background: rgba(245, 158, 11, 0.08);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+  color: var(--amber);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.banner strong {
+  font-weight: 600;
+}
+
 /* ── Left Panel ── */
 .panel {
   background: var(--bg-card);

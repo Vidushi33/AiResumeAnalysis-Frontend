@@ -6,6 +6,7 @@ import { Mode, Provider, ResumeAnalysis, Status } from "@/utils/interface";
 import Navbar from "@/components/navbar";
 import LeftPanel from "@/components/promptPanel/leftPanel";
 import RightPanel from "@/components/analysisPanel/rightPanel";
+import { InfoIcon } from "@/public/icons";
 
 export default function Home() {
   const [provider, setProvider] = useState<Provider>("openai");
@@ -31,6 +32,16 @@ export default function Home() {
       </header>
 
       <main className={styles.main}>
+        <div className={styles.banner}>
+          <InfoIcon />
+          <span>
+            This is a demo project hosted on a free server. The first request
+            may take
+            <strong> 50+ seconds</strong> to respond due to a cold start —
+            subsequent requests will be fast.
+          </span>
+        </div>
+
         <div className={styles.layout}>
           {/* LEFT PANEL — Controls */}
           <LeftPanel
