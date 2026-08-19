@@ -2,11 +2,17 @@
 
 import { useState, useRef, useCallback } from "react";
 import styles from "./page.module.css";
-import { Mode, Provider, ResumeAnalysis, Status } from "@/utils/interface";
+import {
+  AtsAnalysis,
+  Mode,
+  Provider,
+  ResumeAnalysis,
+  Status,
+} from "@/utils/interface";
 import Navbar from "@/components/navbar";
 import LeftPanel from "@/components/promptPanel/leftPanel";
 import RightPanel from "@/components/analysisPanel/rightPanel";
-import { InfoIcon } from "@/public/icons";
+import {  InfoIcon } from "@/public/icons";
 
 export default function Home() {
   const [provider, setProvider] = useState<Provider>("openai");
@@ -17,12 +23,16 @@ export default function Home() {
   const [error, setError] = useState("");
   const abortRef = useRef<AbortController | null>(null);
 
+  const [jobDescription, setJobDescription] = useState("");
+  const [atsAnalysis, setAtsAnalysis] = useState<AtsAnalysis | null>(null);
+
   const reset = useCallback(() => {
     abortRef.current?.abort();
     setStatus("idle");
     setStreamedText("");
     setAnalysis(null);
     setError("");
+    setAtsAnalysis(null);
   }, []);
 
   return (
@@ -56,6 +66,9 @@ export default function Home() {
             setStatus={setStatus}
             setStreamedText={setStreamedText}
             status={status}
+            jobDescription={jobDescription}
+            setJobDescription={setJobDescription}
+            setAtsAnalyses={setAtsAnalysis}
           />
 
           {/* RIGHT PANEL — Results */}
@@ -67,6 +80,8 @@ export default function Home() {
             reset={reset}
             status={status}
             streamedText={streamedText}
+            atsAnalysis={atsAnalysis}
+            hasJobDescription={!!jobDescription.trim()}
           />
         </div>
       </main>

@@ -10,7 +10,15 @@ import {
 import styles from "../../app/page.module.css";
 import EmptyState from "../emptyState";
 import ProviderPill from "../providerPill";
-import { Mode, Provider, ResumeAnalysis, Status } from "@/utils/interface";
+import {
+  AtsAnalysis,
+  Mode,
+  Provider,
+  ResumeAnalysis,
+  Status,
+} from "@/utils/interface";
+import AtsResult from "./atsScore/atsResult";
+import LoadingState from "../loadingAtsState";
 
 interface IRight {
   mode: Mode;
@@ -20,6 +28,8 @@ interface IRight {
   provider: Provider;
   analysis: ResumeAnalysis | null;
   status: Status;
+  atsAnalysis: AtsAnalysis | null;
+  hasJobDescription: boolean;
 }
 
 const RightPanel = ({
@@ -30,9 +40,13 @@ const RightPanel = ({
   reset,
   streamedText,
   status,
+  atsAnalysis,
+  hasJobDescription,
 }: IRight) => {
   const hasResult =
-    (mode === "text" && streamedText) || (mode === "pdf" && analysis);
+    (mode === "text" && streamedText) ||
+    (mode === "pdf" && analysis) ||
+    (mode === "ats" && atsAnalysis);
 
   return (
     <div className={styles.resultsPanel}>
@@ -78,26 +92,12 @@ const RightPanel = ({
           </div>
         )}
 
-      {/* Loading skeleton for PDF */}
-      {mode === "pdf" && status === "loading" && (
-        <div className={styles.skeletonWrap} key="skeleton">
-          <div className={styles.skeletonHeader}>
-            <div className={styles.spinner} />
-            <span>Extracting and analyzing...</span>
-          </div>
-          <div
-            className={styles.skeleton}
-            style={{ height: 80, marginBottom: 12 }}
-          />
-          <div
-            className={styles.skeleton}
-            style={{ height: 120, marginBottom: 12 }}
-          />
-          <div className={styles.skeleton} style={{ height: 100 }} />
-        </div>
+      {/* Loading skeleton for PDF and Ats Checking */}
+      {(mode === "pdf" || mode === "ats") && status === "loading" && (
+        <LoadingState mode={mode} />
       )}
 
-      {/* Structured JSON Result */}
+      {/* Structured JSON Result For Pdf Upload */}
       {mode === "pdf" && analysis && status !== "loading" && (
         <div className={styles.analysisWrap} key="analysis">
           <div className={styles.resultHeader}>
@@ -207,6 +207,15 @@ const RightPanel = ({
             </div>
           )}
         </div>
+      )}
+
+      {/* Result for Ats checking */}
+      {mode === "ats" && atsAnalysis && status !== "loading" && (
+        <AtsResult
+          analysis={atsAnalysis}
+          provider={provider}
+          hasJobDescription={hasJobDescription}
+        />
       )}
     </div>
   );

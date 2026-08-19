@@ -15,8 +15,14 @@ import TickIcon from "./tickIcon";
 import CrossIcon from "./crossIcon";
 import HexagonIcon from "./hexagonIcon";
 import InfoIcon from "./infoIcon";
+import AtsIcon from "./atsIcon";
+import EmptyText from "./emptyText";
+import EmptyPdf from "./emptyPdf";
 
 export {
+  EmptyPdf,
+  EmptyText,
+  AtsIcon,
   InfoIcon,
   HexagonIcon,
   CrossIcon,
